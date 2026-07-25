@@ -1,0 +1,9 @@
+作业要求/
+tmp/
+__pycache__/
+*.py[cod]
+report/tmp/
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc

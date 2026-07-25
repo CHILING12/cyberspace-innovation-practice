@@ -1,0 +1,78 @@
+{
+  "network": "testnet4",
+  "authorization": "P2WSH witness program SHA256(OP_TRUE); witnessScript=OP_TRUE",
+  "op_true_address": "tb1qft5p2uhsdcdc3l2ua4ap5qqfg4pjaqlp250x7us7a8qqhrxrxfsqaqh7jw",
+  "witness_script_hex": "51",
+  "witness_program_hex": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+  "selected_utxos": [
+    {
+      "txid": "d986a8484e6ded3daa525d4e8eddc22142edb1daafad3bd7a01e049f871f017b",
+      "vout": 1,
+      "status": {
+        "confirmed": true,
+        "block_height": 74434,
+        "block_hash": "00000000296248bf9fc0ef3981d27608c2583d9fef6803ec68db75270d15eddb",
+        "block_time": 1742638073
+      },
+      "value": 330
+    },
+    {
+      "txid": "cc952879086ceac8495f5965652249b192bd18860d4365fd27216ceade62b515",
+      "vout": 1,
+      "status": {
+        "confirmed": true,
+        "block_height": 74435,
+        "block_hash": "00000000c17b0600569393818788b62ff050a7e3e19b546f494ecc6a6d4ba4a1",
+        "block_time": 1742639274
+      },
+      "value": 330
+    },
+    {
+      "txid": "621e054ee16a0520ff079953f49ac73f6eb3e204b80d67175cb6777d47da0a9c",
+      "vout": 1,
+      "status": {
+        "confirmed": true,
+        "block_height": 74435,
+        "block_hash": "00000000c17b0600569393818788b62ff050a7e3e19b546f494ecc6a6d4ba4a1",
+        "block_time": 1742639274
+      },
+      "value": 330
+    },
+    {
+      "txid": "9b686307916bcbd8f7c4d442361567600d0a4250fb18f67184ad212af87196eb",
+      "vout": 1,
+      "status": {
+        "confirmed": true,
+        "block_height": 74434,
+        "block_hash": "00000000296248bf9fc0ef3981d27608c2583d9fef6803ec68db75270d15eddb",
+        "block_time": 1742638073
+      },
+      "value": 330
+    },
+    {
+      "txid": "4c93c0239c1c4292c64ecb3b47717404cf63a56055ab6434bb7f32e4f8ea2716",
+      "vout": 1,
+      "status": {
+        "confirmed": true,
+        "block_height": 74435,
+        "block_hash": "00000000c17b0600569393818788b62ff050a7e3e19b546f494ecc6a6d4ba4a1",
+        "block_time": 1742639274
+      },
+      "value": 330
+    }
+  ],
+  "input_total_satoshi": 1650,
+  "destination_address": "tb1qw0mgkymm78hd270asxdcvhlucfhjw72t4ajxge",
+  "output_value_satoshi": 1000,
+  "fee_satoshi": 650,
+  "fee_rate_sat_vbyte": 2.589641434262948,
+  "txid_local": "4aa330ae4ecf52c82f38d22149b2b7da79f928e1cdad47bb33b553c093a25f7a",
+  "wtxid_local": "7ea8089a0b477ef55a2d1ae80bd24f2025ef6020b1207e224177e9ff52f8b9b7",
+  "size": 263,
+  "weight": 1001,
+  "vsize": 251,
+  "raw_transaction": "020000000001057b011f879f041ea0d73badafdab1ed4221c2dd8e4e5d52aa3ded6d4e48a886d90100000000ffffffff15b562deea6c2127fd65430d8618bd92b149226565595f49c8ea6c08792895cc0100000000ffffffff9c0ada477d77b65c17670db804e2b36e3fc79af4539907ff20056ae14e051e620100000000ffffffffeb9671f82a21ad8471f618fb50420a0d6067153642d4c4f7d8cb6b910763689b0100000000ffffffff1627eaf8e4327fbb3464ab5560a563cf047471473bcb4ec692421c9c23c0934c0100000000ffffffff01e80300000000000016001473f68b137bf1eed579fd819b865ffcc26f27794b01015101015101015101015101015100000000",
+  "broadcast_txid": "4aa330ae4ecf52c82f38d22149b2b7da79f928e1cdad47bb33b553c093a25f7a",
+  "broadcast_unix": 1784532686,
+  "explorer_url": "https://mempool.space/testnet4/tx/4aa330ae4ecf52c82f38d22149b2b7da79f928e1cdad47bb33b553c093a25f7a"
+}

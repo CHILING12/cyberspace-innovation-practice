@@ -1,0 +1,31 @@
+{
+  "network": "testnet4",
+  "txid_requested": "ad00f80a9c85264ebf3ca4299d61cca06efba0487223d4e6caa9d9e58e9ac105",
+  "txid_computed": "ad00f80a9c85264ebf3ca4299d61cca06efba0487223d4e6caa9d9e58e9ac105",
+  "wtxid_computed": "56508ced1dc61e19699ce54b23728fbf076b95bb737ead63074926bde6661825",
+  "segwit": true,
+  "version": 2,
+  "input_count": 1,
+  "output_count": 2,
+  "locktime": 0,
+  "total_size_bytes": 223,
+  "stripped_size_bytes": 113,
+  "weight_units": 562,
+  "virtual_size_bytes": 141,
+  "all_bytes_accounted": true,
+  "status_from_api": {
+    "confirmed": false
+  },
+  "outputs": [
+    {
+      "index": 0,
+      "value_satoshi": 400,
+      "script_pubkey": "0014b2e1ef5a68d198f19bed1ca49c2ed496d3499a3f"
+    },
+    {
+      "index": 1,
+      "value_satoshi": 318,
+      "script_pubkey": "001473f68b137bf1eed579fd819b865ffcc26f27794b"
+    }
+  ]
+}

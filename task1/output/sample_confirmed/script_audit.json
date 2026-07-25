@@ -1,0 +1,70 @@
+[
+  {
+    "script_code": "76a914fbc7a1586fc3c289af9d07dcf249fbab804e7a5088ac",
+    "sighash_digest": "379a0230421e7602004b4058512b32fbd500ca1d9b526713bbec2f24f431f45f",
+    "r": "0x9841cd535bd7d336be3360f6d220f1c65de6298357f37faeb6622cf05bdbf042",
+    "s": "0x4de798a90894d15d646a2ac85ef8ad2de2b899b09b4c1161eaf00ef9ca6a5e3",
+    "low_s": true,
+    "pubkey_hash_matches": true,
+    "ecdsa_valid": true,
+    "cleanstack_success": true,
+    "trace": [
+      {
+        "operation": "WITNESS",
+        "detail": "initial witness stack: signature then public key",
+        "stack": [
+          "30450221009841cd535bd7d336be3360f6d220f1c65de6298357f37faeb6622cf05bdbf042022004de798a90894d15d646a2ac85ef8ad2de2b899b09b4c1161eaf00ef9ca6a5e301",
+          "02e380b7cb12fec0c91f5bcea915d92465ca9dac3490c881443fb80f972ef7159a"
+        ]
+      },
+      {
+        "operation": "OP_DUP",
+        "detail": "duplicate public key",
+        "stack": [
+          "30450221009841cd535bd7d336be3360f6d220f1c65de6298357f37faeb6622cf05bdbf042022004de798a90894d15d646a2ac85ef8ad2de2b899b09b4c1161eaf00ef9ca6a5e301",
+          "02e380b7cb12fec0c91f5bcea915d92465ca9dac3490c881443fb80f972ef7159a",
+          "02e380b7cb12fec0c91f5bcea915d92465ca9dac3490c881443fb80f972ef7159a"
+        ]
+      },
+      {
+        "operation": "OP_HASH160",
+        "detail": "HASH160(public key)",
+        "stack": [
+          "30450221009841cd535bd7d336be3360f6d220f1c65de6298357f37faeb6622cf05bdbf042022004de798a90894d15d646a2ac85ef8ad2de2b899b09b4c1161eaf00ef9ca6a5e301",
+          "02e380b7cb12fec0c91f5bcea915d92465ca9dac3490c881443fb80f972ef7159a",
+          "fbc7a1586fc3c289af9d07dcf249fbab804e7a50"
+        ]
+      },
+      {
+        "operation": "PUSH20",
+        "detail": "push key hash from witness program",
+        "stack": [
+          "30450221009841cd535bd7d336be3360f6d220f1c65de6298357f37faeb6622cf05bdbf042022004de798a90894d15d646a2ac85ef8ad2de2b899b09b4c1161eaf00ef9ca6a5e301",
+          "02e380b7cb12fec0c91f5bcea915d92465ca9dac3490c881443fb80f972ef7159a",
+          "fbc7a1586fc3c289af9d07dcf249fbab804e7a50",
+          "fbc7a1586fc3c289af9d07dcf249fbab804e7a50"
+        ]
+      },
+      {
+        "operation": "OP_EQUALVERIFY",
+        "detail": "equal key hashes removed",
+        "stack": [
+          "30450221009841cd535bd7d336be3360f6d220f1c65de6298357f37faeb6622cf05bdbf042022004de798a90894d15d646a2ac85ef8ad2de2b899b09b4c1161eaf00ef9ca6a5e301",
+          "02e380b7cb12fec0c91f5bcea915d92465ca9dac3490c881443fb80f972ef7159a"
+        ]
+      },
+      {
+        "operation": "OP_CHECKSIG",
+        "detail": "ECDSA verification result=True",
+        "stack": [
+          "01"
+        ]
+      }
+    ],
+    "input_index": 0,
+    "prev_txid": "84023e9e1549a75269b99d0f49b9e251fffe509e63fe4d4caca85845122be2e0",
+    "prev_vout": 269,
+    "prevout_value_satoshi": 778123,
+    "prevout_script_pubkey": "0014fbc7a1586fc3c289af9d07dcf249fbab804e7a50"
+  }
+]

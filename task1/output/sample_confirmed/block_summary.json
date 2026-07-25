@@ -1,0 +1,17 @@
+{
+  "block_hash_computed": "0000000239d2d23fd805ccdaa46f4f93554e7b2d0f6065c57fd4ec125e46599c",
+  "version": 536870912,
+  "previous_hash": "0000001196a9618770be2fec89bb48865ea887afebe9a2ea5a07bf752b74ee21",
+  "merkle_root_header": "ba8b8fa16161cc0411ba6c17393e39dc927a85a0e4bc6bdfb95223239b7663ad",
+  "merkle_root_computed": "ba8b8fa16161cc0411ba6c17393e39dc927a85a0e4bc6bdfb95223239b7663ad",
+  "merkle_root_valid": true,
+  "timestamp": 1784530690,
+  "timestamp_utc": "2026-07-20T06:58:10+00:00",
+  "bits_hex": "0x1d14ab71",
+  "target_hex": "00000014ab710000000000000000000000000000000000000000000000000000",
+  "nonce": 127870564,
+  "proof_of_work_valid": true,
+  "transaction_count": 41,
+  "block_size_bytes": 74123,
+  "all_bytes_accounted": true
+}

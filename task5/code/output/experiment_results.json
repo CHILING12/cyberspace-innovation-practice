@@ -1,0 +1,379 @@
+{
+  "assignment": "single-input single-output 4x4 encrypted convolution with a 3x3 kernel",
+  "library": {
+    "name": "TenSEAL",
+    "version": "0.3.16",
+    "backend": "Microsoft SEAL"
+  },
+  "runtime": {
+    "python": "3.12.9",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "scheme": "CKKS",
+  "parameters": {
+    "poly_modulus_degree": 8192,
+    "coeff_mod_bit_sizes": [
+      60,
+      40,
+      40,
+      60
+    ],
+    "global_scale_bits": 40,
+    "target_security_level_bits": 128,
+    "total_coeff_modulus_bits": 200,
+    "global_scale": "2^40"
+  },
+  "convolution": {
+    "input_shape": [
+      1,
+      1,
+      4,
+      4
+    ],
+    "kernel_shape": [
+      1,
+      1,
+      3,
+      3
+    ],
+    "output_shape": [
+      1,
+      1,
+      2,
+      2
+    ],
+    "stride": 1,
+    "padding": 0,
+    "operation_semantics": "cross-correlation (CNN Conv2D convention; kernel is not flipped)",
+    "input": [
+      [
+        1.0,
+        2.0,
+        3.0,
+        4.0
+      ],
+      [
+        5.0,
+        6.0,
+        7.0,
+        8.0
+      ],
+      [
+        9.0,
+        10.0,
+        11.0,
+        12.0
+      ],
+      [
+        13.0,
+        14.0,
+        15.0,
+        16.0
+      ]
+    ],
+    "kernel": [
+      [
+        1.0,
+        -1.0,
+        2.0
+      ],
+      [
+        0.0,
+        3.0,
+        -2.0
+      ],
+      [
+        2.0,
+        1.0,
+        -1.0
+      ]
+    ],
+    "plaintext_reference": [
+      [
+        26.0,
+        31.0
+      ],
+      [
+        46.0,
+        51.0
+      ]
+    ],
+    "decrypted_output": [
+      [
+        26.000003036778416,
+        31.000004199480824
+      ],
+      [
+        46.000006376746114,
+        51.000006842397156
+      ]
+    ]
+  },
+  "packing": {
+    "method": "TenSEAL im2col_encoding + conv2d_im2col",
+    "valid_windows": 4,
+    "encrypted_vector_size": 64,
+    "logical_output_slots": 4
+  },
+  "key_separation": {
+    "client_has_secret_key": true,
+    "server_has_secret_key": false,
+    "server_context_is_private": false,
+    "server_context_is_public": true,
+    "evaluation_context_excludes_secret_key": true
+  },
+  "serialized_sizes_bytes": {
+    "client_private_context_serialization": 705215,
+    "server_public_evaluation_context": 35472727,
+    "encrypted_im2col_input": 334372,
+    "encrypted_output": 235338,
+    "plaintext_input_payload": 128,
+    "plaintext_output_payload": 32
+  },
+  "verification": {
+    "trials": 10,
+    "absolute_error_tolerance": 0.001,
+    "maximum_absolute_error_all_trials": 6.881520242529859e-06,
+    "mean_absolute_error_all_slots": 5.1056786833036934e-06,
+    "all_trials_within_tolerance": true,
+    "ciphertexts_are_randomized": true,
+    "unique_input_ciphertexts": 10,
+    "result_correct": true
+  },
+  "timing": {
+    "context_and_key_setup_ms": 1337.9748,
+    "client_encrypt_and_serialize": {
+      "mean_ms": 10.46538,
+      "median_ms": 10.40245,
+      "min_ms": 9.1464,
+      "max_ms": 11.8977,
+      "stdev_ms": 0.8750853720891719
+    },
+    "server_load_evaluate_and_serialize": {
+      "mean_ms": 14.572880000000001,
+      "median_ms": 14.574950000000001,
+      "min_ms": 13.6477,
+      "max_ms": 15.7046,
+      "stdev_ms": 0.6857537407035331
+    },
+    "client_load_and_decrypt": {
+      "mean_ms": 2.4884999999999997,
+      "median_ms": 2.3277,
+      "min_ms": 2.1385,
+      "max_ms": 2.9855,
+      "stdev_ms": 0.3406588811895755
+    }
+  },
+  "trials": [
+    {
+      "trial": 1,
+      "input_ciphertext_sha256": "003326083c290f270e826e329d1facd6054853997d80aaacebe037eca0661716",
+      "decrypted_output": [
+        [
+          26.000003053332325,
+          31.000004190005438
+        ],
+        [
+          46.00000635637492,
+          51.00000679386601
+        ]
+      ],
+      "max_absolute_error": 6.79386600666021e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 10.8076,
+        "server_load_evaluate_and_serialize": 15.7046,
+        "client_load_and_decrypt": 2.4286
+      }
+    },
+    {
+      "trial": 2,
+      "input_ciphertext_sha256": "dda7119bc86b198867388c9f5611f5201985acecbb2947c521c42e0d626503b1",
+      "decrypted_output": [
+        [
+          26.00000302814571,
+          31.00000420915782
+        ],
+        [
+          46.00000634821594,
+          51.000006818766494
+        ]
+      ],
+      "max_absolute_error": 6.818766493665862e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 10.8585,
+        "server_load_evaluate_and_serialize": 13.7184,
+        "client_load_and_decrypt": 2.2855
+      }
+    },
+    {
+      "trial": 3,
+      "input_ciphertext_sha256": "b2fbf174d1e880a0841684bf4020b7ff44e60164acee4130524ca2d7bfdb2eb3",
+      "decrypted_output": [
+        [
+          26.000003051217497,
+          31.000004193663532
+        ],
+        [
+          46.0000063742068,
+          51.00000688152024
+        ]
+      ],
+      "max_absolute_error": 6.881520242529859e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 9.529,
+        "server_load_evaluate_and_serialize": 13.6477,
+        "client_load_and_decrypt": 2.94
+      }
+    },
+    {
+      "trial": 4,
+      "input_ciphertext_sha256": "3af6f579dfeec493219376982bd51b91d7bb3c3f0f7ead7ea8f519a0f7912cf0",
+      "decrypted_output": [
+        [
+          26.000003060261037,
+          31.000004228731047
+        ],
+        [
+          46.00000632246148,
+          51.00000684432424
+        ]
+      ],
+      "max_absolute_error": 6.84432423980752e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 10.1933,
+        "server_load_evaluate_and_serialize": 14.5744,
+        "client_load_and_decrypt": 2.2309
+      }
+    },
+    {
+      "trial": 5,
+      "input_ciphertext_sha256": "d0f0546c8bd9d7473a0ad77b828ca1d299c0ba9cdc3f461688fa4b6667c9a201",
+      "decrypted_output": [
+        [
+          26.000003030365285,
+          31.00000418819779
+        ],
+        [
+          46.00000635803978,
+          51.000006816965644
+        ]
+      ],
+      "max_absolute_error": 6.81696564441836e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 9.9566,
+        "server_load_evaluate_and_serialize": 14.3899,
+        "client_load_and_decrypt": 2.3395
+      }
+    },
+    {
+      "trial": 6,
+      "input_ciphertext_sha256": "19d1f426a73666549935ec70d97924361a10cc7b6c26446623af4060c99bd505",
+      "decrypted_output": [
+        [
+          26.000003052440977,
+          31.000004185820014
+        ],
+        [
+          46.00000636720623,
+          51.000006839487085
+        ]
+      ],
+      "max_absolute_error": 6.839487085130713e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 9.1464,
+        "server_load_evaluate_and_serialize": 14.8504,
+        "client_load_and_decrypt": 2.1385
+      }
+    },
+    {
+      "trial": 7,
+      "input_ciphertext_sha256": "928228f6be632f95ba234625ccb00a3933e00169352944843ad99f1736562072",
+      "decrypted_output": [
+        [
+          26.00000303265153,
+          31.000004198264975
+        ],
+        [
+          46.000006310661085,
+          51.0000068099879
+        ]
+      ],
+      "max_absolute_error": 6.809987901590375e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 11.6442,
+        "server_load_evaluate_and_serialize": 14.9124,
+        "client_load_and_decrypt": 2.9833
+      }
+    },
+    {
+      "trial": 8,
+      "input_ciphertext_sha256": "e56cf9129ae3e7884a967057ff7a2124887534435de8fa43a3ab97bb843e2dd4",
+      "decrypted_output": [
+        [
+          26.00000302862095,
+          31.00000419812417
+        ],
+        [
+          46.00000630295568,
+          51.00000687261178
+        ]
+      ],
+      "max_absolute_error": 6.87261177745313e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 11.8977,
+        "server_load_evaluate_and_serialize": 14.5755,
+        "client_load_and_decrypt": 2.2373
+      }
+    },
+    {
+      "trial": 9,
+      "input_ciphertext_sha256": "2a125a1e80083e4edb801a2e3b64bfa6257d50f1c0e3009b51ec671ea2aa81f8",
+      "decrypted_output": [
+        [
+          26.000003055998803,
+          31.000004194787962
+        ],
+        [
+          46.00000632726355,
+          51.0000068470431
+        ]
+      ],
+      "max_absolute_error": 6.8470431031641965e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 10.6116,
+        "server_load_evaluate_and_serialize": 13.9302,
+        "client_load_and_decrypt": 2.9855
+      }
+    },
+    {
+      "trial": 10,
+      "input_ciphertext_sha256": "4672f0f9d28e6d5aee4f8ee69e34224c96372be99494b6fe9dcc7d1e2fb4ab36",
+      "decrypted_output": [
+        [
+          26.000003036778416,
+          31.000004199480824
+        ],
+        [
+          46.000006376746114,
+          51.000006842397156
+        ]
+      ],
+      "max_absolute_error": 6.842397155537583e-06,
+      "within_tolerance": true,
+      "timing_ms": {
+        "client_encrypt_and_serialize": 10.0089,
+        "server_load_evaluate_and_serialize": 15.4253,
+        "client_load_and_decrypt": 2.3159
+      }
+    }
+  ]
+}

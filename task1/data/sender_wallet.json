@@ -1,0 +1,10 @@
+{
+  "warning": "TEST NETWORK KEY ONLY - NEVER SEND MAINNET BITCOIN TO THIS KEY",
+  "network": "signet",
+  "private_key_hex": "c755a8131d8b2150432419aea314e0c85e7d93be821c42600307fe6759107206",
+  "wif_testnet_compressed": "cUGBWfBivk5wrBFNVdxm2ZDP6KfJajCozgdcATdKWvPhzK17gbVn",
+  "public_key_compressed": "03e7e02238083a8ece773e39f38ab72ee8fd06fce0f14057fddbff77e6f7528624",
+  "p2wpkh_program": "8f492e524fe34417da433ee893574975a226f8b5",
+  "address": "tb1q3ayju5j0udzp0kjr8m5fx46fwk3zd794dj708y",
+  "created_unix": 1784529631
+}

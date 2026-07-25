@@ -1,0 +1,75 @@
+[
+  {
+    "script_type": "P2WPKH",
+    "script_code": "76a91473f68b137bf1eed579fd819b865ffcc26f27794b88ac",
+    "sighash_digest": "d403cadc3a7ad30cf0082c4b8658397c70cbd8dc3fff2ae43539f256793dd93a",
+    "hash_prevouts": "d6f3e525d7a564b2ba16490b4806fb12c5767e126f4cacda653d5db02be1d48e",
+    "hash_sequence": "caf35e5224de16efa3ccaf41070f6e7b9432b6f79551e629fca9d1c03b43bc52",
+    "hash_outputs": "d23fabf0910579f82d571b5d5e580265b9b454353b77bb590de4e8700df80247",
+    "sighash_preimage": "02000000d6f3e525d7a564b2ba16490b4806fb12c5767e126f4cacda653d5db02be1d48ecaf35e5224de16efa3ccaf41070f6e7b9432b6f79551e629fca9d1c03b43bc527a5fa293c053b533bb47adcde128f979dab7b24921d2382fc852cf4eae30a34a000000001976a91473f68b137bf1eed579fd819b865ffcc26f27794b88ace803000000000000fdffffffd23fabf0910579f82d571b5d5e580265b9b454353b77bb590de4e8700df802470000000001000000",
+    "r": "0xb62d9b08f0c3ad4047342a89926efc9555b41f011ef38825b3f16e1edaca5faf",
+    "s": "0x522e664de5874670515a5f6049d92d7db9875d5c05b8deda8a65007539187d6a",
+    "low_s": true,
+    "pubkey_hash_matches": true,
+    "ecdsa_valid": true,
+    "cleanstack_success": true,
+    "trace": [
+      {
+        "operation": "WITNESS",
+        "detail": "initial witness stack: signature then public key",
+        "stack": [
+          "3045022100b62d9b08f0c3ad4047342a89926efc9555b41f011ef38825b3f16e1edaca5faf0220522e664de5874670515a5f6049d92d7db9875d5c05b8deda8a65007539187d6a01",
+          "027bcb30196c0ffaee495d2c054e1bf7483bfa470c08dee12cef47d729d5cb50b2"
+        ]
+      },
+      {
+        "operation": "OP_DUP",
+        "detail": "duplicate public key",
+        "stack": [
+          "3045022100b62d9b08f0c3ad4047342a89926efc9555b41f011ef38825b3f16e1edaca5faf0220522e664de5874670515a5f6049d92d7db9875d5c05b8deda8a65007539187d6a01",
+          "027bcb30196c0ffaee495d2c054e1bf7483bfa470c08dee12cef47d729d5cb50b2",
+          "027bcb30196c0ffaee495d2c054e1bf7483bfa470c08dee12cef47d729d5cb50b2"
+        ]
+      },
+      {
+        "operation": "OP_HASH160",
+        "detail": "HASH160(public key)",
+        "stack": [
+          "3045022100b62d9b08f0c3ad4047342a89926efc9555b41f011ef38825b3f16e1edaca5faf0220522e664de5874670515a5f6049d92d7db9875d5c05b8deda8a65007539187d6a01",
+          "027bcb30196c0ffaee495d2c054e1bf7483bfa470c08dee12cef47d729d5cb50b2",
+          "73f68b137bf1eed579fd819b865ffcc26f27794b"
+        ]
+      },
+      {
+        "operation": "PUSH20",
+        "detail": "push key hash from witness program",
+        "stack": [
+          "3045022100b62d9b08f0c3ad4047342a89926efc9555b41f011ef38825b3f16e1edaca5faf0220522e664de5874670515a5f6049d92d7db9875d5c05b8deda8a65007539187d6a01",
+          "027bcb30196c0ffaee495d2c054e1bf7483bfa470c08dee12cef47d729d5cb50b2",
+          "73f68b137bf1eed579fd819b865ffcc26f27794b",
+          "73f68b137bf1eed579fd819b865ffcc26f27794b"
+        ]
+      },
+      {
+        "operation": "OP_EQUALVERIFY",
+        "detail": "equal key hashes removed",
+        "stack": [
+          "3045022100b62d9b08f0c3ad4047342a89926efc9555b41f011ef38825b3f16e1edaca5faf0220522e664de5874670515a5f6049d92d7db9875d5c05b8deda8a65007539187d6a01",
+          "027bcb30196c0ffaee495d2c054e1bf7483bfa470c08dee12cef47d729d5cb50b2"
+        ]
+      },
+      {
+        "operation": "OP_CHECKSIG",
+        "detail": "ECDSA verification result=True",
+        "stack": [
+          "01"
+        ]
+      }
+    ],
+    "input_index": 0,
+    "prev_txid": "4aa330ae4ecf52c82f38d22149b2b7da79f928e1cdad47bb33b553c093a25f7a",
+    "prev_vout": 0,
+    "prevout_value_satoshi": 1000,
+    "prevout_script_pubkey": "001473f68b137bf1eed579fd819b865ffcc26f27794b"
+  }
+]

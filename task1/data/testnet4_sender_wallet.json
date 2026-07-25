@@ -1,0 +1,10 @@
+{
+  "warning": "TEST NETWORK KEY ONLY - NEVER SEND MAINNET BITCOIN TO THIS KEY",
+  "network": "testnet4",
+  "private_key_hex": "ed7b50af6b9987d55192517d6b3686b530e7b14d5c5a627fc5398f553dd4ea77",
+  "wif_testnet_compressed": "cVYLPJUYb3ivXLiEodssvAes7aGeS5MK5X3BTkBQNH5cm3cJzYvN",
+  "public_key_compressed": "027bcb30196c0ffaee495d2c054e1bf7483bfa470c08dee12cef47d729d5cb50b2",
+  "p2wpkh_program": "73f68b137bf1eed579fd819b865ffcc26f27794b",
+  "address": "tb1qw0mgkymm78hd270asxdcvhlucfhjw72t4ajxge",
+  "created_unix": 1784532649
+}

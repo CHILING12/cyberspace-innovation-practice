@@ -1,0 +1,10 @@
+{
+  "warning": "TEST NETWORK KEY ONLY - NEVER SEND MAINNET BITCOIN TO THIS KEY",
+  "network": "mutinynet",
+  "private_key_hex": "0983a62a5e85367698d37041d2287015d4ba90cb2e353e4ac9a19b2bbf2afa2f",
+  "wif_testnet_compressed": "cMuCKxZQf9X4iR9g2uGhEk4NCKvErrsTSiDW315n9goWy51NR6DD",
+  "public_key_compressed": "034c07a0957a780f3ec30c4e8bb77fc10d7de150fb6c09f17fc97dbc6d1b343184",
+  "p2wpkh_program": "b6b3e701f6133e875b9dd973e0a8d4aa98655c55",
+  "address": "tb1qk6e7wq0kzvlgwkuam9e7p2x542vx2hz4vkyzyd",
+  "created_unix": 1784530843
+}

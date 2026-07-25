@@ -1,0 +1,23 @@
+start,end_exclusive,length,field,wire_hex,interpreted_value
+0,4,4,tx.version,02000000,2
+4,5,1,tx.marker,00,0 (SegWit marker)
+5,6,1,tx.flag,01,1 (witness present)
+6,7,1,tx.input_count,01,1
+7,39,32,tx.vin[0].prev_txid_le,e0e22b124558a8ac4c4dfe639e50feff51e2b9490f9db96952a749159e3e0284,e0e22b124558a8ac4c4dfe639e50feff51e2b9490f9db96952a749159e3e0284
+39,43,4,tx.vin[0].prev_vout,0d010000,269
+43,44,1,tx.vin[0].script_sig_length,00,0
+44,44,0,tx.vin[0].script_sig,,
+44,48,4,tx.vin[0].sequence,ffffffff,4294967295
+48,49,1,tx.output_count,02,2
+49,57,8,tx.vout[0].value_satoshi,20a1070000000000,500000
+57,58,1,tx.vout[0].script_pubkey_length,22,34
+58,92,34,tx.vout[0].script_pubkey,5120ac6b4328ef2bda05ed6ea32083f5c13d04ebf230144a643a84f8a7d9efe2b3d3,5120ac6b4328ef2bda05ed6ea32083f5c13d04ebf230144a643a84f8a7d9efe2b3d3
+92,100,8,tx.vout[1].value_satoshi,d23d040000000000,277970
+100,101,1,tx.vout[1].script_pubkey_length,16,22
+101,123,22,tx.vout[1].script_pubkey,0014fbc7a1586fc3c289af9d07dcf249fbab804e7a50,0014fbc7a1586fc3c289af9d07dcf249fbab804e7a50
+123,124,1,tx.vin[0].witness_count,02,2
+124,125,1,tx.vin[0].witness[0].length,48,72
+125,197,72,tx.vin[0].witness[0].data,30450221009841cd535bd7d336be3360f6d220f1c65de6298357f37faeb6622cf05bdbf042022004de798a90894d15d646a2ac85ef8ad2de2b899b09b4c1161eaf00ef9ca6a5e301,30450221009841cd535bd7d336be3360f6d220f1c65de6298357f37faeb6622cf05bdbf042022004de798a90894d15d646a2ac85ef8ad2de2b899b09b4c1161eaf00ef9ca6a5e301
+197,198,1,tx.vin[0].witness[1].length,21,33
+198,231,33,tx.vin[0].witness[1].data,02e380b7cb12fec0c91f5bcea915d92465ca9dac3490c881443fb80f972ef7159a,02e380b7cb12fec0c91f5bcea915d92465ca9dac3490c881443fb80f972ef7159a
+231,235,4,tx.locktime,00000000,0

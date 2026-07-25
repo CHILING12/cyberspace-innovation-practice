@@ -1,0 +1,137 @@
+[
+  {
+    "script_type": "P2WSH(OP_TRUE)",
+    "witness_script": "51",
+    "witness_program_expected": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_computed": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_matches": true,
+    "cleanstack_success": true,
+    "trace": [
+      {
+        "operation": "WITNESS_SCRIPT",
+        "detail": "SHA256(witnessScript) equals the 32-byte witness program",
+        "stack": []
+      },
+      {
+        "operation": "OP_TRUE",
+        "detail": "push script number 1",
+        "stack": [
+          "01"
+        ]
+      }
+    ],
+    "input_index": 0,
+    "prev_txid": "d986a8484e6ded3daa525d4e8eddc22142edb1daafad3bd7a01e049f871f017b",
+    "prev_vout": 1,
+    "prevout_value_satoshi": 330,
+    "prevout_script_pubkey": "00204ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260"
+  },
+  {
+    "script_type": "P2WSH(OP_TRUE)",
+    "witness_script": "51",
+    "witness_program_expected": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_computed": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_matches": true,
+    "cleanstack_success": true,
+    "trace": [
+      {
+        "operation": "WITNESS_SCRIPT",
+        "detail": "SHA256(witnessScript) equals the 32-byte witness program",
+        "stack": []
+      },
+      {
+        "operation": "OP_TRUE",
+        "detail": "push script number 1",
+        "stack": [
+          "01"
+        ]
+      }
+    ],
+    "input_index": 1,
+    "prev_txid": "cc952879086ceac8495f5965652249b192bd18860d4365fd27216ceade62b515",
+    "prev_vout": 1,
+    "prevout_value_satoshi": 330,
+    "prevout_script_pubkey": "00204ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260"
+  },
+  {
+    "script_type": "P2WSH(OP_TRUE)",
+    "witness_script": "51",
+    "witness_program_expected": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_computed": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_matches": true,
+    "cleanstack_success": true,
+    "trace": [
+      {
+        "operation": "WITNESS_SCRIPT",
+        "detail": "SHA256(witnessScript) equals the 32-byte witness program",
+        "stack": []
+      },
+      {
+        "operation": "OP_TRUE",
+        "detail": "push script number 1",
+        "stack": [
+          "01"
+        ]
+      }
+    ],
+    "input_index": 2,
+    "prev_txid": "621e054ee16a0520ff079953f49ac73f6eb3e204b80d67175cb6777d47da0a9c",
+    "prev_vout": 1,
+    "prevout_value_satoshi": 330,
+    "prevout_script_pubkey": "00204ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260"
+  },
+  {
+    "script_type": "P2WSH(OP_TRUE)",
+    "witness_script": "51",
+    "witness_program_expected": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_computed": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_matches": true,
+    "cleanstack_success": true,
+    "trace": [
+      {
+        "operation": "WITNESS_SCRIPT",
+        "detail": "SHA256(witnessScript) equals the 32-byte witness program",
+        "stack": []
+      },
+      {
+        "operation": "OP_TRUE",
+        "detail": "push script number 1",
+        "stack": [
+          "01"
+        ]
+      }
+    ],
+    "input_index": 3,
+    "prev_txid": "9b686307916bcbd8f7c4d442361567600d0a4250fb18f67184ad212af87196eb",
+    "prev_vout": 1,
+    "prevout_value_satoshi": 330,
+    "prevout_script_pubkey": "00204ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260"
+  },
+  {
+    "script_type": "P2WSH(OP_TRUE)",
+    "witness_script": "51",
+    "witness_program_expected": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_computed": "4ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260",
+    "witness_program_matches": true,
+    "cleanstack_success": true,
+    "trace": [
+      {
+        "operation": "WITNESS_SCRIPT",
+        "detail": "SHA256(witnessScript) equals the 32-byte witness program",
+        "stack": []
+      },
+      {
+        "operation": "OP_TRUE",
+        "detail": "push script number 1",
+        "stack": [
+          "01"
+        ]
+      }
+    ],
+    "input_index": 4,
+    "prev_txid": "4c93c0239c1c4292c64ecb3b47717404cf63a56055ab6434bb7f32e4f8ea2716",
+    "prev_vout": 1,
+    "prevout_value_satoshi": 330,
+    "prevout_script_pubkey": "00204ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc33260"
+  }
+]

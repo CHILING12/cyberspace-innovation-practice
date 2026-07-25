@@ -1,0 +1,10 @@
+参考资料/
+实验要求.txt
+tmp/
+__pycache__/
+*.py[cod]
+report/tmp/
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc

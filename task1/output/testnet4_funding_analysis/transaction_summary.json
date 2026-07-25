@@ -1,0 +1,29 @@
+{
+  "network": "testnet4",
+  "txid_requested": "4aa330ae4ecf52c82f38d22149b2b7da79f928e1cdad47bb33b553c093a25f7a",
+  "txid_computed": "4aa330ae4ecf52c82f38d22149b2b7da79f928e1cdad47bb33b553c093a25f7a",
+  "wtxid_computed": "7ea8089a0b477ef55a2d1ae80bd24f2025ef6020b1207e224177e9ff52f8b9b7",
+  "segwit": true,
+  "version": 2,
+  "input_count": 5,
+  "output_count": 1,
+  "locktime": 0,
+  "total_size_bytes": 263,
+  "stripped_size_bytes": 246,
+  "weight_units": 1001,
+  "virtual_size_bytes": 251,
+  "all_bytes_accounted": true,
+  "status_from_api": {
+    "confirmed": true,
+    "block_height": 144878,
+    "block_hash": "0000000000b9d2773b283332f6e1c36da7fdd7b11af12fa7f14866e0beb425ca",
+    "block_time": 1784541269
+  },
+  "outputs": [
+    {
+      "index": 0,
+      "value_satoshi": 1000,
+      "script_pubkey": "001473f68b137bf1eed579fd819b865ffcc26f27794b"
+    }
+  ]
+}
