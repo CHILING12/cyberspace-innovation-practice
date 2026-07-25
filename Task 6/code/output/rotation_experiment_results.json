@@ -1,0 +1,109 @@
+{
+  "assignment": "rotation minimization for encrypted convolution",
+  "generic": {
+    "name": "generic_3x3_im2col",
+    "packing_method": "TenSEAL im2col_encoding + conv2d_im2col",
+    "encrypted_vector_size": 64,
+    "decrypted_output": [
+      [
+        26.00000351868265,
+        31.000004467288097
+      ],
+      [
+        46.00000608451039,
+        51.00000687722747
+      ]
+    ],
+    "expected_output": [
+      [
+        26.0,
+        31.0
+      ],
+      [
+        46.0,
+        51.0
+      ]
+    ],
+    "maximum_absolute_error": 6.877227470170055e-06,
+    "rotation_analysis": {
+      "original_terms": 9,
+      "padded_terms": 16,
+      "windows": 4,
+      "packed_vector_size": 64,
+      "rotation_steps": [
+        32,
+        16,
+        8,
+        4
+      ],
+      "actual_rotation_count": 4,
+      "theoretical_lower_bound": 4,
+      "reaches_lower_bound": true
+    }
+  },
+  "sparse": {
+    "name": "sparse_kernel_packing",
+    "packing_method": "remove zero kernel positions + enc_matmul_encoding + enc_matmul_plain",
+    "active_kernel_indices": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "active_kernel_weights": [
+      1.0,
+      -1.0,
+      2.0,
+      3.0,
+      -2.0,
+      2.0,
+      1.0,
+      -1.0
+    ],
+    "nonzero_kernel_terms": 8,
+    "encrypted_vector_size": 32,
+    "decrypted_output": [
+      [
+        26.000002867076994,
+        31.000004188110985
+      ],
+      [
+        46.00000612680132,
+        51.00000683032198
+      ]
+    ],
+    "expected_output": [
+      [
+        26.0,
+        31.0
+      ],
+      [
+        46.0,
+        51.0
+      ]
+    ],
+    "maximum_absolute_error": 6.830321979123255e-06,
+    "rotation_analysis": {
+      "original_terms": 8,
+      "padded_terms": 8,
+      "windows": 4,
+      "packed_vector_size": 32,
+      "rotation_steps": [
+        16,
+        8,
+        4
+      ],
+      "actual_rotation_count": 3,
+      "theoretical_lower_bound": 3,
+      "reaches_lower_bound": true
+    }
+  },
+  "conclusion": {
+    "generic_convolution_optimal": true,
+    "fixed_sparse_kernel_optimal": true
+  }
+}
