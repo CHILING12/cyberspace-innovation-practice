@@ -1,0 +1,13 @@
+# Local benchmark builds and repository worktrees
+output/builds/
+data/repo/*/
+!data/repo/README.md
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Native build products
+*.o
+*.obj
+*.exe

@@ -1,4 +1,0 @@
-﻿comparison,operation,blocks,runs_per_phase,median_block_relative_change_pct,mad_block_relative_change_pct,bootstrap_median_change_ci95_low_pct,bootstrap_median_change_ci95_high_pct,interpretation
-pr1446-ecdsa_verify,ecdsa_verify,15,30,-6.306306306306278,2.022504432142955,-7.596513075965124,-2.551020408163265,negative means after is faster
-pr1058-ecdsa_sign,ecdsa_sign,15,30,-11.776061776061766,0.6865676126376385,-12.355212355212352,-11.089494163424128,negative means after is faster
-pr1058-ec_keygen,ec_keygen,15,30,-13.850415512465355,1.3504155124653696,-15.053763440860218,-12.499999999999986,negative means after is faster

@@ -1,7 +1,0 @@
-﻿comparison,phase,variant,commit,operation,iterations,runs,median_avg_us,mad_avg_us,bootstrap_median_ci95_low_us,bootstrap_median_ci95_high_us,min_avg_us,max_avg_us
-pr1446-ecdsa_verify,before,pr1446-before,07687e811d1c9700e6fe9d658aef080e3568c0f1,ecdsa_verify,4000,30,38.349999999999994,1.1999999999999993,37.650000000000006,39.4,36.5,42.4
-pr1446-ecdsa_verify,after,pr1446-after,10e6d29b60c3931e327bc18e6c50cea78296b1ba,ecdsa_verify,4000,30,36.75,1.0999999999999979,36.05,37.5,34.6,41.0
-pr1058-ecdsa_sign,before,pr1058-before,d8311688bd383d3a923a1b11789cded3cc8e5e03,ecdsa_sign,7000,30,26.0,0.34999999999999964,25.65,26.2,24.9,28.1
-pr1058-ecdsa_sign,after,pr1058-after,da515074e3ebc8abc85a4fff3a31d7694ecf897b,ecdsa_sign,7000,30,22.75,0.4499999999999993,22.5,23.1,21.9,24.1
-pr1058-ec_keygen,before,pr1058-before,d8311688bd383d3a923a1b11789cded3cc8e5e03,ec_keygen,7000,30,18.4,0.29999999999999716,18.2,18.6,17.5,19.3
-pr1058-ec_keygen,after,pr1058-after,da515074e3ebc8abc85a4fff3a31d7694ecf897b,ec_keygen,7000,30,15.8,0.4500000000000002,15.45,16.2,14.9,17.3

@@ -1,0 +1,129 @@
+{
+  "phase_summaries": [
+    {
+      "comparison": "pr1446-ecdsa_verify",
+      "phase": "before",
+      "variant": "pr1446-before",
+      "commit": "07687e811d1c9700e6fe9d658aef080e3568c0f1",
+      "operation": "ecdsa_verify",
+      "iterations": 4000,
+      "runs": 30,
+      "median_avg_us": 38.349999999999994,
+      "mad_avg_us": 1.1999999999999993,
+      "bootstrap_median_ci95_low_us": 37.650000000000006,
+      "bootstrap_median_ci95_high_us": 39.4,
+      "min_avg_us": 36.5,
+      "max_avg_us": 42.4
+    },
+    {
+      "comparison": "pr1446-ecdsa_verify",
+      "phase": "after",
+      "variant": "pr1446-after",
+      "commit": "10e6d29b60c3931e327bc18e6c50cea78296b1ba",
+      "operation": "ecdsa_verify",
+      "iterations": 4000,
+      "runs": 30,
+      "median_avg_us": 36.75,
+      "mad_avg_us": 1.0999999999999979,
+      "bootstrap_median_ci95_low_us": 36.05,
+      "bootstrap_median_ci95_high_us": 37.5,
+      "min_avg_us": 34.6,
+      "max_avg_us": 41.0
+    },
+    {
+      "comparison": "pr1058-ecdsa_sign",
+      "phase": "before",
+      "variant": "pr1058-before",
+      "commit": "d8311688bd383d3a923a1b11789cded3cc8e5e03",
+      "operation": "ecdsa_sign",
+      "iterations": 7000,
+      "runs": 30,
+      "median_avg_us": 26.0,
+      "mad_avg_us": 0.34999999999999964,
+      "bootstrap_median_ci95_low_us": 25.65,
+      "bootstrap_median_ci95_high_us": 26.2,
+      "min_avg_us": 24.9,
+      "max_avg_us": 28.1
+    },
+    {
+      "comparison": "pr1058-ecdsa_sign",
+      "phase": "after",
+      "variant": "pr1058-after",
+      "commit": "da515074e3ebc8abc85a4fff3a31d7694ecf897b",
+      "operation": "ecdsa_sign",
+      "iterations": 7000,
+      "runs": 30,
+      "median_avg_us": 22.75,
+      "mad_avg_us": 0.4499999999999993,
+      "bootstrap_median_ci95_low_us": 22.5,
+      "bootstrap_median_ci95_high_us": 23.1,
+      "min_avg_us": 21.9,
+      "max_avg_us": 24.1
+    },
+    {
+      "comparison": "pr1058-ec_keygen",
+      "phase": "before",
+      "variant": "pr1058-before",
+      "commit": "d8311688bd383d3a923a1b11789cded3cc8e5e03",
+      "operation": "ec_keygen",
+      "iterations": 7000,
+      "runs": 30,
+      "median_avg_us": 18.4,
+      "mad_avg_us": 0.29999999999999716,
+      "bootstrap_median_ci95_low_us": 18.2,
+      "bootstrap_median_ci95_high_us": 18.6,
+      "min_avg_us": 17.5,
+      "max_avg_us": 19.3
+    },
+    {
+      "comparison": "pr1058-ec_keygen",
+      "phase": "after",
+      "variant": "pr1058-after",
+      "commit": "da515074e3ebc8abc85a4fff3a31d7694ecf897b",
+      "operation": "ec_keygen",
+      "iterations": 7000,
+      "runs": 30,
+      "median_avg_us": 15.8,
+      "mad_avg_us": 0.4500000000000002,
+      "bootstrap_median_ci95_low_us": 15.45,
+      "bootstrap_median_ci95_high_us": 16.2,
+      "min_avg_us": 14.9,
+      "max_avg_us": 17.3
+    }
+  ],
+  "comparison_summaries": [
+    {
+      "comparison": "pr1446-ecdsa_verify",
+      "operation": "ecdsa_verify",
+      "blocks": 15,
+      "runs_per_phase": 30,
+      "median_block_relative_change_pct": -6.306306306306278,
+      "mad_block_relative_change_pct": 2.022504432142955,
+      "bootstrap_median_change_ci95_low_pct": -7.596513075965124,
+      "bootstrap_median_change_ci95_high_pct": -2.551020408163265,
+      "interpretation": "negative means after is faster"
+    },
+    {
+      "comparison": "pr1058-ecdsa_sign",
+      "operation": "ecdsa_sign",
+      "blocks": 15,
+      "runs_per_phase": 30,
+      "median_block_relative_change_pct": -11.776061776061766,
+      "mad_block_relative_change_pct": 0.6865676126376385,
+      "bootstrap_median_change_ci95_low_pct": -12.355212355212352,
+      "bootstrap_median_change_ci95_high_pct": -11.089494163424128,
+      "interpretation": "negative means after is faster"
+    },
+    {
+      "comparison": "pr1058-ec_keygen",
+      "operation": "ec_keygen",
+      "blocks": 15,
+      "runs_per_phase": 30,
+      "median_block_relative_change_pct": -13.850415512465355,
+      "mad_block_relative_change_pct": 1.3504155124653696,
+      "bootstrap_median_change_ci95_low_pct": -15.053763440860218,
+      "bootstrap_median_change_ci95_high_pct": -12.499999999999986,
+      "interpretation": "negative means after is faster"
+    }
+  ]
+}
