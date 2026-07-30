@@ -1,5 +1,5 @@
 # Local benchmark builds and repository worktrees
-output/builds/
+builds/
 data/repo/*/
 !data/repo/README.md
 

@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REPO = ROOT / "data" / "repo"
-BUILD = ROOT / "output" / "builds"
+BUILD = ROOT / "builds"
 OUT = ROOT / "data"
 GCC = Path(os.environ.get("CC", "gcc"))
 

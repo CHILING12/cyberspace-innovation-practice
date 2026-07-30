@@ -8,20 +8,20 @@
 .
 ├─ code/       实验探针、基准测试与回归测试脚本
 ├─ data/       实验结果、汇编、补丁和来源记录
-├─ output/     最终报告 PDF
+├─ report.pdf  最终报告 PDF
 ├─ .gitignore
 └─ README.md
 ```
 
 ## 直接查看
 
-最终报告位于 `output/report.pdf`。
+最终报告位于当前目录下的 `report.pdf`，在 GitHub 文件列表中点击即可查看。
 
 ## 项目内容
 
 - `code/`：PR #1257 与 PR #1446 的 C 探针、基准测试脚本和默认测试脚本；
 - `data/`：基准测试明细、汇总数据、汇编输出、核心补丁和测试记录；
-- `output/report.pdf`：课程作业最终报告。
+- `report.pdf`：课程作业最终报告。
 
 ## 复现实验
 
@@ -35,7 +35,7 @@ python .\code\run_default_tests_all.py
 ```
 
 实验脚本默认从 `data/repo/` 读取源码工作树，将构建产物写入
-`output/builds/`，结果写入 `data/`。报告采用的原始结果已随项目提供，
+`builds/`，结果写入 `data/`。报告采用的原始结果已随项目提供，
 不重新运行也可以检查。
 
 ## 数据检查
