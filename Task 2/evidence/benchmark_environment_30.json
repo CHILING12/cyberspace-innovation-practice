@@ -1,0 +1,18 @@
+{
+  "timestamp_local": "2026-07-30 10:18:24 +0800",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.13",
+  "processor": "Intel64 Family 6 Model 186 Stepping 2, GenuineIntel",
+  "execution_controls": {
+    "requested_cpu_index": 0,
+    "affinity_applied": true,
+    "high_priority_applied": true,
+    "affinity_error": 0,
+    "priority_error": 0
+  },
+  "design": "15 four-run blocks; odd blocks ABBA, even blocks BAAB; 30 retained runs per phase",
+  "warmup": "ABBA once per comparison and discarded",
+  "bootstrap_samples": 10000,
+  "bootstrap_seed": 20260730,
+  "compiler": "GCC 15.2.0, -O2 -std=c90 -fno-omit-frame-pointer"
+}

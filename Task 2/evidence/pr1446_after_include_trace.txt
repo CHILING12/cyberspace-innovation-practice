@@ -1,0 +1,6 @@
+COMMAND:
+C:\mingw64\bin\gcc.exe -O2 -std=c90 -IC:\Users\23930\Documents\Codex\2026-07-20\she\work\secp-report\repo\pr1446_after -IC:\Users\23930\Documents\Codex\2026-07-20\she\work\secp-report\repo\pr1446_after\include -IC:\Users\23930\Documents\Codex\2026-07-20\she\work\secp-report\repo\pr1446_after\src -DSECP256K1_STATIC -DUSE_ASM_X86_64 -DECMULT_WINDOW_SIZE=15 -DECMULT_GEN_PREC_BITS=4 -H -E -o NUL C:\Users\23930\Documents\Codex\2026-07-20\she\work\secp-report\repo\pr1446_after\src\secp256k1.c
+
+RELEVANT INCLUDE TRACE:
+.. C:\Users\23930\Documents\Codex\2026-07-20\she\work\secp-report\repo\pr1446_after\src\field_5x52_impl.h
+... C:\Users\23930\Documents\Codex\2026-07-20\she\work\secp-report\repo\pr1446_after\src\field_5x52_int128_impl.h

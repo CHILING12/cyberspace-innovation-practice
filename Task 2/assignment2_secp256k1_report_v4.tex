@@ -1,0 +1,862 @@
+﻿% !TEX program = xelatex
+\documentclass[UTF8,a4paper,zihao=-4]{ctexart}
+
+\usepackage[margin=2.55cm,headheight=34pt,headsep=0.55cm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs,longtable,tabularx,array,multirow,makecell}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\usepackage{microtype}
+\tcbuselibrary{breakable,skins}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{%
+  \begin{minipage}[c]{0.2\textwidth}
+    \IfFileExists{imgs/logo1.jpg}{\includegraphics[height=11mm]{imgs/logo1.jpg}}{}
+  \end{minipage}%
+}
+\fancyhead[C]{密码分析与设计实践\ 课程作业2报告}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headwidth}{\textwidth}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  urlcolor=red!55!black,
+  citecolor=green!40!black,
+  pdfauthor={赵孙梦元},
+  pdftitle={课程作业2：Bitcoin Core 中 libsecp256k1 的常数时间修复与性能改进分析}
+}
+
+\definecolor{SDUred}{RGB}{138,21,27}
+\definecolor{commentGreen}{RGB}{0,130,70}
+\definecolor{stringPurple}{RGB}{170,40,150}
+\definecolor{keywordBlue}{RGB}{0,80,180}
+\definecolor{backGray}{RGB}{248,248,248}
+\definecolor{numberGray}{RGB}{120,120,120}
+\definecolor{noteBlue}{RGB}{235,245,255}
+\definecolor{noteFrame}{RGB}{40,105,170}
+\definecolor{resultBg}{RGB}{250,242,243}
+\definecolor{resultFrame}{RGB}{152,24,37}
+\definecolor{warningBg}{RGB}{255,250,235}
+\definecolor{warningFrame}{RGB}{150,95,0}
+
+\lstdefinestyle{CStyle}{
+  language=C,
+  backgroundcolor=\color{backGray},
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color{keywordBlue}\bfseries,
+  commentstyle=\color{commentGreen}\itshape,
+  stringstyle=\color{stringPurple},
+  numberstyle=\tiny\color{numberGray},
+  numbers=left,
+  numbersep=8pt,
+  breaklines=true,
+  showstringspaces=false,
+  frame=single,
+  rulecolor=\color{black!25},
+  columns=fullflexible
+}
+
+\lstdefinestyle{ShellStyle}{
+  backgroundcolor=\color{backGray},
+  basicstyle=\footnotesize\ttfamily\color{black!88},
+  numbers=none,
+  breaklines=true,
+  showstringspaces=false,
+  frame=single,
+  rulecolor=\color{black!25},
+  columns=fullflexible
+}
+
+\renewcommand{\lstlistingname}{代码}
+\renewcommand{\arraystretch}{1.25}
+\setlist[itemize]{leftmargin=2em,itemsep=0.16em,topsep=0.25em}
+\setlist[enumerate]{leftmargin=2em,itemsep=0.16em,topsep=0.25em}
+\captionsetup{font=small,labelfont=bf}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\linespread{1.35}
+\raggedbottom
+\emergencystretch=2em
+\setcounter{tocdepth}{1}
+
+\newtcolorbox{notebox}[1][]{breakable,colback=noteBlue,colframe=noteFrame,
+  fonttitle=\bfseries,title=#1}
+\newtcolorbox{resultbox}[1][]{breakable,colback=resultBg,colframe=resultFrame,
+  fonttitle=\bfseries,title=#1}
+\newtcolorbox{warningbox}[1][]{breakable,colback=warningBg,colframe=warningFrame,
+  fonttitle=\bfseries,title=#1}
+
+\newcommand{\micros}{\ensuremath{\mu\mathrm{s}}}
+\newcommand{\sourcecaption}[1]{%
+  \par\vspace{-0.35em}{\centering\footnotesize\color{black!60}#1\par}
+}
+\newcommand{\reportfigure}[4]{%
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=#2\textwidth]{#1}
+    \caption{#3}
+    \sourcecaption{#4}
+  \end{figure}
+}
+
+\newcommand{\singlecover}{%
+\begin{titlepage}
+  \centering
+  \IfFileExists{./imgs/sdured.png}{%
+    \includegraphics[width=0.65\textwidth]{./imgs/sdured.png}%
+  }{}
+  \par\vspace{0.75cm}
+  {\Huge\heiti 密码分析与设计实践\par}
+  \vspace{0.25cm}
+  {\Large\heiti 课程作业2（方向 B）\par}
+  \vspace{0.35cm}
+  {\Large\heiti Bitcoin Core 中 libsecp256k1 的\par}
+  \vspace{0.2cm}
+  {\Large\heiti 常数时间修复与性能改进分析\par}
+  \vspace{1.8cm}
+
+  \begin{center}
+    {\Large
+    \makebox[4em][s]{\heiti 姓名}:\underline{\makebox[15em][c]{\heiti 赵孙梦元}}\\[0.35em]
+    \makebox[4em][s]{\heiti 学号}:\underline{\makebox[15em][c]{\heiti 202300460062}}\\[0.35em]
+    \makebox[4em][s]{\heiti 班级}:\underline{\makebox[15em][c]{\heiti 2023级密码1班}}\\[0.35em]
+    \makebox[4em][s]{\heiti 学院}:\underline{\makebox[15em][c]{\heiti 网络空间安全学院}}\\
+    }
+  \end{center}
+
+  \vfill
+  \begin{center}
+    2026 年 7 月 30 日
+  \end{center}
+\end{titlepage}
+}
+
+\begin{document}
+
+\singlecover
+\thispagestyle{empty}
+\clearpage
+
+\pagenumbering{Roman}
+\section*{摘要}
+\addcontentsline{toc}{section}{摘要}
+
+本文以 \path{bitcoin-core/secp256k1} 仓库为研究对象，选取 PR \#1257、
+PR \#1446 和 PR \#1058，分析常数时间实现修复、域运算实现调整及固定基点
+乘法优化。分析材料包括源码差异、编译输出、默认测试与微基准数据。
+
+PR \#1257 处理 Clang 15 对条件移动代码的优化问题。补丁前的汇编先通过
+\texttt{cmove} 选择指针，再加载被选地址；补丁后则同时加载两侧数据并按
+掩码合并。PR \#1446 删除 x86\_64 域运算手写汇编，GCC
+\texttt{-H} 输出显示构建路径由 \path{field_5x52_asm_impl.h} 切换为
+\path{field_5x52_int128_impl.h}。PR \#1058 将固定基点乘法改为
+signed-digit multi-comb，在默认参数下把主预计算表由 64 KiB 缩小到
+22 KiB，并减少在线点加入次数。四个性能版本均通过上游默认迭代测试。
+
+性能实验采用 15 个 ABBA/BAAB 交错区组，每个版本保留 30 次测量。在本机
+GCC 15.2.0、Windows 11 环境中，PR \#1446 的 ECDSA 验签耗时中位变化为
+$-6.31\%$；PR \#1058 的 ECDSA 签名与公钥生成分别为 $-11.78\%$ 和
+$-13.85\%$。上述数值反映指定环境下的库级性能变化。
+
+\noindent\textbf{关键词：}secp256k1；Bitcoin；ECDSA；常数时间；
+5$\times$52 域表示；signed-digit multi-comb；微基准测试
+
+\clearpage
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\section{引言}
+
+课程作业要求分析 \path{bitcoin-core/secp256k1} 仓库中与 Bitcoin 密码算法
+有关的安全修复和性能改进，并说明相关修改的原因及数学基础。本文将可能破坏
+常数时间性质的实现缺陷纳入安全修复范围，但不将库级风险等同于已经得到
+端到端验证的 Bitcoin Core 可利用漏洞。
+
+本文讨论三个问题：
+
+\begin{enumerate}
+  \item PR \#1257 如何改变编译后的内存访问模式，其常数时间意义是什么？
+  \item PR \#1446 删除旧汇编后，域运算的构建入口和实现路径如何变化？
+  \item PR \#1058 如何调整预计算表与在线点运算，并产生怎样的性能影响？
+\end{enumerate}
+
+报告依次检查提交记录与源码差异，再结合汇编、预处理器输出、正确性测试和
+性能测量分析修改效果。安全结论限于所检查的探针与编译器；性能结果限于
+本文给出的版本、构建参数与实验机器。
+
+\section{仓库检查与案例筛选}
+
+\subsection{检索方法}
+
+检查对象为官方 \path{bitcoin-core/secp256k1} 仓库\cite{secp-repo}。首先在
+\texttt{CHANGELOG.md} 中检索 \texttt{constant-time}、\texttt{compiler}、
+\texttt{asm}、\texttt{ecmult} 和 \texttt{performance}，随后阅读关联 PR
+及评审记录，并通过 \texttt{git show}、\texttt{git diff} 确认修改文件与
+相关函数。合并 PR 的合入前版本取合并提交的第一父提交，以减少无关差异。
+
+本文检查的主要文件如下：
+
+\begin{lstlisting}[style=ShellStyle,basicstyle=\scriptsize\ttfamily]
+secp256k1/
++-- CHANGELOG.md
++-- src/
+    +-- secp256k1.c
+    +-- field_5x52_impl.h
+    +-- field_5x52_asm_impl.h
+    +-- field_5x52_int128_impl.h
+    +-- ecmult_gen.h
+    +-- ecmult_gen_impl.h
+    +-- precomputed_ecmult_gen.c
+    +-- util.h
+    +-- tests.c
+\end{lstlisting}
+
+\subsection{候选项与选择结果}
+
+\begin{table}[H]
+\centering
+\caption{仓库候选案例筛选}
+\footnotesize
+\begin{tabularx}{\textwidth}{p{0.10\textwidth}p{0.30\textwidth}
+p{0.18\textwidth}X}
+\toprule
+PR & 主题 & 结果 & 理由 \\
+\midrule
+\#1257 & Clang $\geq14$ 下常数时间条件移动 & 安全案例 &
+与秘密相关条件移动直接有关，可比较补丁前后汇编。\\
+\#1303 & GCC 13.1 下 ECDH 常数时间问题 & 未选 &
+与 \#1257 的编译器主题重叠，且主要位于 ECDH 路径。\\
+\#1446 & 删除 x86\_64 域运算汇编 & 性能案例 &
+位于验签热点，可由 \texttt{gcc -H} 确认构建路径。\\
+\#1058 & signed-digit multi-comb & 性能案例 &
+影响签名和公钥生成，适合分析算法与表空间变化。\\
+\#1184 & \texttt{ecmult\_const} signed-digit 改进 & 未选 &
+与 \#1058 的数学主题重叠。\\
+\#1000 & MSVC 合成 128 位乘法 & 未选 &
+目标工具链与本机 MinGW GCC 不同。\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+三个入选案例分别对应编译器行为、有限域实现和固定基点标量乘法三个层次。
+
+\section{数学背景与 Bitcoin Core 调用路径}
+
+\subsection{曲线、ECDSA 与两类标量乘法}
+
+secp256k1 定义在素域 $\mathbb{F}_p$ 上：
+\begin{equation}
+ E:\ y^2=x^3+7\pmod p,\qquad p=2^{256}-2^{32}-977 .
+\end{equation}
+基点 $G$ 的阶为素数 $n$，私钥 $d\in[1,n-1]$，公钥 $P=dG$。对消息
+摘要 $e$，签名算法选择或确定性生成一次性标量 $k$，计算
+\begin{align}
+ R&=kG,\qquad r=x(R)\bmod n,\\
+ s&=k^{-1}(e+rd)\bmod n .
+\end{align}
+验签令 $w=s^{-1}$、$u_1=ew$、$u_2=rw$，检查
+\begin{equation}
+ x(u_1G+u_2P)\bmod n\stackrel{?}{=}r .
+\end{equation}
+
+签名和公钥生成依赖固定基点乘法 $kG$，对应
+\texttt{secp256k1\_ecmult\_gen}；验签使用通用多标量乘法并频繁调用域乘法。
+因此 PR \#1058 主要影响签名和公钥生成，PR \#1446 的测试对象选为验签。
+
+\subsection{Bitcoin Core 中的调用入口}
+
+在固定提交 \texttt{9611a356035b} 中，\texttt{CKey::Sign} 调用
+\path{secp256k1_ecdsa_sign}；\texttt{CPubKey::Verify} 调用
+\path{secp256k1_ecdsa_verify}；BASE/WITNESS\_V0 的
+\path{OP_CHECKSIG} 经 \path{CheckECDSASignature} 到达库的验签入口
+\cite{bitcoin-key,bitcoin-pubkey,bitcoin-interpreter}。Tapscript 采用
+Schnorr 签名，不属于这里讨论的历史 ECDSA 路径。
+
+\reportfigure{imgs/13_bitcoin_core_call_path_paper.png}{1.00}
+{Bitcoin Core 的 ECDSA 调用路径及相关修改位置}
+{注：根据 Bitcoin Core 提交 9611a356035b 绘制，PR 标签表示修改位置，而非运行时调用节点}
+
+PR \#1257 位于条件移动等更底层的实现中。图中的位置关系说明三个案例均处于
+libsecp256k1 的密码运算路径，但库级机器码现象尚不足以说明存在可实施的
+Bitcoin Core 密钥恢复攻击。
+
+\section{实验设计与可复现性}
+
+\subsection{提交版本与实验环境}
+
+\begin{table}[H]
+\centering
+\caption{三个案例的提交版本对}
+\footnotesize
+\begin{tabularx}{\textwidth}{p{0.11\textwidth}p{0.25\textwidth}
+p{0.25\textwidth}X}
+\toprule
+案例 & 合入前 & 合入后 & 取值方式\\
+\midrule
+\#1257 & \texttt{464a9115b4ed} & \texttt{4a496a36fb07} &
+补丁提交及其父提交。\\
+\#1446 & \texttt{07687e811d1c} & \texttt{10e6d29b60c3} &
+合并提交与第一父提交。\\
+\#1058 & \texttt{d8311688bd38} & \texttt{da515074e3eb} &
+合并提交与第一父提交。\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{实验环境}
+\footnotesize
+\begin{tabularx}{\textwidth}{p{0.24\textwidth}X}
+\toprule
+项目 & 配置\\
+\midrule
+处理器 & 13th Gen Intel Core i7-1360P；12 核、16 线程\cite{intel1360p}\\
+系统与内存 & Windows 11（10.0.26200.0）；15.65 GiB\\
+编译器 & MinGW GCC 15.2.0；LLVM Clang 15.0.7\\
+调度控制 & 固定到 Windows 逻辑 CPU 0，并设置高优先级\\
+未控制因素 & 未关闭动态频率与 Turbo，仍可能受到后台任务影响\\
+计时来源 & 上游 \path{src/bench.h} 的微秒计时；外层运行时间由
+Python \texttt{perf\_counter} 记录\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{汇编检查与性能测量}
+
+PR \#1257 的探针从相应提交的头文件调用条件移动函数，并检查最终汇编中的
+分支与加载地址是否依赖秘密值\cite{barthe-ct}。PR \#1446 使用 GCC
+\texttt{-H -E} 记录预处理包含轨迹，以确认合入前后分别进入旧汇编路径和
+int128 路径。
+
+性能测试使用
+\texttt{-O2 -std=c90 -fno-omit-frame-pointer}。PR \#1446 测量
+\texttt{ecdsa\_verify}，每个样本含 4000 次内部迭代；PR \#1058 测量
+\texttt{ecdsa\_sign} 与 \texttt{ec\_keygen}，每个样本含 7000 次内部
+迭代。正式测量前均执行一个不计入结果的预热区组。
+
+正式实验包含 15 个区组。奇数区组按 ABBA、偶数区组按 BAAB 运行，其中
+A 为 before、B 为 after；每个区组包含两个 before 和两个 after 样本，
+即每个版本、每项操作共 30 次。对第 $i$ 个区组，分别取 before 与 after
+样本的中位数，并计算
+\begin{equation}
+\Delta_i=
+\frac{T_{i,\mathrm{after}}-T_{i,\mathrm{before}}}
+     {T_{i,\mathrm{before}}}\times100\%.
+\end{equation}
+以区组相对变化的中位数为主要指标，并通过 bootstrap 给出 95\% 区间。
+
+\subsection{四个性能版本的同口径正确性测试}
+
+四个 before/after 工作树均以 \texttt{SECP256K1\_TEST\_ITERS} 未设置的
+上游默认参数编译并执行 \path{src/tests.c}。结果如下：
+
+\begin{table}[H]
+\centering
+\caption{四个版本的上游默认迭代测试}
+\small
+\begin{tabular}{lccc}
+\toprule
+版本 & 编译退出码 & 测试退出码 & 结果（外层时间）\\
+\midrule
+\#1446-before & 0 & 0 & \texttt{no problems found}（64.186 s）\\
+\#1446-after  & 0 & 0 & \texttt{no problems found}（63.332 s）\\
+\#1058-before & 0 & 0 & \texttt{no problems found}（65.059 s）\\
+\#1058-after  & 0 & 0 & \texttt{no problems found}（64.489 s）\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+四个版本均报告 \texttt{test count = 64} 和
+\texttt{no problems found}；完整日志随附件提供。
+
+\section{PR \#1257：常数时间编译鲁棒性修复}
+
+\subsection{源码变化与编译风险}
+
+补丁修改了条件移动的掩码生成。核心差异可缩写为：
+
+\begin{lstlisting}[style=CStyle,caption={PR \#1257 的关键源码差异}]
+/* before */
+mask0 = flag + ~((uint64_t)0);
+
+/* after */
+volatile int vflag = flag;
+mask0 = vflag + ~((uint64_t)0);
+\end{lstlisting}
+
+问题出现在编译优化阶段：编译器可能把按位选择改写成“先选择指针、再加载
+被选地址”。此时即使没有 \texttt{jcc} 跳转，秘密仍会影响缓存中实际访问
+的地址。密码实现通常要求分支和内存访问模式均不依赖秘密值\cite{barthe-ct}。
+\texttt{volatile} 使中间条件的读写保持为可观察操作，从而阻止本例中
+Clang 15 的上述改写。
+
+\subsection{Clang 15 汇编结果}
+
+\reportfigure{imgs/10_pr1257_assembly_paper.png}{1.00}
+{PR \#1257 合入前后的关键汇编行为}
+{注：由 Clang 15.0.7 在 \texttt{-O2} 下生成，完整汇编及行号见附录 A}
+
+修复前的关键序列为 \texttt{test/cmove/mov [selected pointer]}：
+\texttt{cmove} 先选择地址，随后每个 limb 只加载一侧。修复后先用
+\texttt{setne} 产生布尔值，写入并读回 volatile 栈槽；每个 limb 都从
+两侧加载，再用 \texttt{and/or} 合并。附录列出了修复前 36--50 行和
+修复后 23--52 行的相关指令。汇编结果表明，修复消除了秘密相关的单侧
+地址加载；\texttt{cmove} 本身并非条件跳转。
+
+\subsection{掩码正确性}
+
+函数预条件为 \(\mathrm{flag}\in\{0,1\}\)。在
+\(\mathbb Z/2^{64}\mathbb Z\) 中，
+\begin{equation}
+ \sim0\equiv-1,\qquad
+ \mathrm{mask0}=\mathrm{flag}-1,\qquad
+ \mathrm{mask1}=\sim\mathrm{mask0}.
+\end{equation}
+因此
+\begin{equation}
+(r\land\mathrm{mask0})\lor(a\land\mathrm{mask1})
+=\begin{cases}
+r,&\mathrm{flag}=0,\\
+a,&\mathrm{flag}=1.
+\end{cases}
+\end{equation}
+掩码恒等式保证条件赋值的功能语义；双侧加载则对应机器码层面的常数时间
+目标，需要分别检查。
+
+本次实验未执行 dudect 大样本统计检验，也未在完整 Bitcoin Core 上实施
+攻击。该结果尚不足以说明存在可实施的密钥恢复攻击。
+
+\section{PR \#1446：删除旧 x86\_64 域运算汇编}
+
+\subsection{源码入口与实现路径变化}
+
+该 PR 共修改 6 个文件，新增 13 行、删除 522 行，其中
+\path{src/field_5x52_asm_impl.h} 的 504 行被整体删除。关键入口差异位于
+\path{src/field_5x52_impl.h}：
+
+\begin{lstlisting}[style=ShellStyle,caption={PR \#1446 的核心代码差异},basicstyle=\scriptsize\ttfamily]
+-#if defined(USE_ASM_X86_64)
+-#include "field_5x52_asm_impl.h"
+-#else
+ #include "field_5x52_int128_impl.h"
+-#endif
+\end{lstlisting}
+
+合入前，汇编文件分别在第 19 行和第 289 行实现
+\texttt{secp256k1\_fe\_mul\_inner} 与
+\texttt{secp256k1\_fe\_sqr\_inner}；合入后，同名函数由
+\path{field_5x52_int128_impl.h} 第 18 行和第 154 行提供。修改取消了
+条件入口，使编译器统一处理已有的 C/int128 实现。
+
+\subsection{构建路径验证}
+
+仅在命令行定义 \texttt{-DUSE\_ASM\_X86\_64}，尚不足以确认旧汇编进入
+翻译单元。本文对两个提交使用相同的 GCC 15.2.0
+\texttt{-H -E -DUSE\_ASM\_X86\_64} 命令，相关输出如下：
+
+\begin{lstlisting}[style=ShellStyle,caption={GCC -H 的相关输出},basicstyle=\scriptsize\ttfamily]
+[before 07687e811d1c]
+..  .../src/field_5x52_impl.h
+... .../src/field_5x52_asm_impl.h
+
+[after 10e6d29b60c3]
+..  .../src/field_5x52_impl.h
+... .../src/field_5x52_int128_impl.h
+\end{lstlisting}
+
+包含轨迹显示，微基准比较对象由手写 x86\_64 汇编切换为 C/int128 实现。
+完整输出保存在 \path{pr1446_before_include_trace.txt} 和
+\path{pr1446_after_include_trace.txt}。
+
+\subsection{5$\times$52 乘法与伪梅森约减}
+
+令 \(B=2^{52}\)，域元素写成
+\begin{equation}
+a=\sum_{i=0}^{4}a_iB^i .
+\end{equation}
+乘法卷积系数为 \(t_k=\sum_{i+j=k}a_ib_j\)。每个单项小于 \(2^{104}\)，
+同一系数最多累加五项，所以
+\begin{equation}
+t_k<5\cdot2^{104}<2^{107}.
+\end{equation}
+64 位不足以保存该中间值，128 位无符号整数可以容纳它，这说明了 C 实现
+采用宽乘法与宽累加器的原因。
+
+又因为
+\begin{equation}
+p=2^{256}-2^{32}-977,\qquad
+2^{256}\equiv2^{32}+977\pmod p,
+\end{equation}
+超过 256 位的高部可以折回低部。在 5$\times$52 表示下，
+\begin{equation}
+B^5=2^{260}\equiv16(2^{32}+977)
+=\mathtt{0x1000003D10}\pmod p,
+\end{equation}
+即源码中的折叠常数。新旧实现都形成部分积、折叠高 limb、传播进位并
+规范化；差异主要来自代码载体、寄存器分配与编译器生成的指令调度。
+本文的性能结果不具有跨编译器和跨微架构的普适性。
+
+\section{PR \#1058：signed-digit multi-comb 固定基点乘法}
+
+\subsection{参数、表结构与上下文变化}
+
+合入前的默认参数是每次取 4 位：
+
+\begin{lstlisting}[style=CStyle,caption={合入前的固定基点预计算参数}]
+#define ECMULT_GEN_PREC_BITS 4
+#define ECMULT_GEN_PREC_G(bits) (1 << bits)
+#define ECMULT_GEN_PREC_N(bits) (256 / bits)
+\end{lstlisting}
+
+合入后 \path{src/ecmult_gen.h} 直接描述 multi-comb：
+
+\begin{lstlisting}[style=CStyle,caption={合入后的默认 multi-comb 参数}]
+#define COMB_BLOCKS 11
+#define COMB_TEETH 6
+#define COMB_SPACING CEIL_DIV(COMB_RANGE,
+                              COMB_BLOCKS * COMB_TEETH)
+#define COMB_POINTS (1 << (COMB_TEETH - 1))
+\end{lstlisting}
+
+上下文也从 \texttt{blind/initial} 改为
+\texttt{scalar\_offset/ge\_offset/proj\_blind}。这些量分别完成标量偏移、
+群元素补偿和射影坐标盲化，使 signed-digit 重编码仍计算同一个 \(kG\)，
+并保留侧信道防护。
+
+\subsection{在线计算循环的前后差异}
+
+旧 \texttt{secp256k1\_ecmult\_gen} 把标量分成 64 个 4 位块。每块取
+\texttt{n\_i}，常数时间扫描 16 个表项，再加入一次：
+
+\begin{lstlisting}[style=CStyle,caption={合入前 ecmult\_gen 的核心循环（源码摘录）}]
+for (i = 0; i < n; i++) {
+    n_i = secp256k1_scalar_get_bits(&gnb, i * bits, bits);
+    for (j = 0; j < g; j++) {
+        secp256k1_ge_storage_cmov(&adds, &table[i][j],
+                                 j == n_i);
+    }
+    secp256k1_gej_add_ge(r, r, &add);
+}
+\end{lstlisting}
+
+新实现按 \texttt{comb\_off} 和 \texttt{block} 取每个 tooth 的位，把最高位
+解释为符号，其余位形成表索引：
+
+\begin{lstlisting}[style=CStyle,caption={合入后 signed-digit 查表的关键源码}]
+sign = (bits >> (COMB_TEETH - 1)) & 1;
+abs = (bits ^ -sign) & (COMB_POINTS - 1);
+for (i = 0; i < COMB_POINTS; ++i) {
+    secp256k1_ge_storage_cmov(&adds,
+        &secp256k1_ecmult_gen_prec_table[block][i],
+        i == abs);
+}
+secp256k1_fe_negate(&neg, &add.y, 1);
+secp256k1_fe_cmov(&add.y, &neg, sign);
+\end{lstlisting}
+
+源码先扫描全部 32 个候选项，再以常数时间条件取负。默认参数下
+\(\mathrm{spacing}=\lceil256/66\rceil=4\)，在线过程包含
+\(4\cdot11=44\) 次表选择/点加入和 3 次倍点；旧实现包含 64 次表选择/
+点加入。扫描的表项总数由 \(64\cdot16=1024\) 增为
+\(44\cdot32=1408\)。这一变化的主要收益来自点加入次数下降和表布局调整；
+常数时间扫描的表项总数并未下降。
+
+\subsection{signed-digit 数学与 3 位例子}
+
+对 \(T\) 位块 \(s=\sum_{i=0}^{T-1}b_i2^i\)，令
+\(d_i=2b_i-1\in\{-1,+1\}\)，则
+\begin{equation}
+\sum_{i=0}^{T-1}d_i2^iP
+=\left(2s-(2^T-1)\right)P .
+\end{equation}
+负点只需把纵坐标改为 \(-y\bmod p\)，所以互补位型可共用一个表项。以
+3 位为例：
+
+\begin{table}[H]
+\centering
+\caption{3 位块的互补配对：8 种位型只保存 4 个幅值}
+\small
+\begin{tabular}{cccc}
+\toprule
+保存索引 & 正号位型 & 负号互补位型 & 实现动作\\
+\midrule
+0 & 000 & 111 & 取表项 0；后者取负\\
+1 & 001 & 110 & 取表项 1；后者取负\\
+2 & 010 & 101 & 取表项 2；后者取负\\
+3 & 011 & 100 & 取表项 3；后者取负\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+源码中的
+\(\mathrm{sign}=b_2\) 和
+\(\mathrm{abs}=(\mathrm{bits}\oplus-\mathrm{sign})\ \&\ 3\)
+正好实现上述配对；标量偏移和补偿点用于抵消
+\(2^T-1\) 常量项。
+
+\subsection{表空间的定量变化}
+
+旧默认表含
+\(64\cdot16=1024\) 个 \texttt{secp256k1\_ge\_storage}；每个点保存两个
+256 位坐标，共 64 字节，因此约为 64 KiB。新默认表含
+\begin{equation}
+11\cdot2^{6-1}=352\ \text{个点},\qquad
+352\cdot64=22528\ \text{bytes}=22\ \text{KiB}.
+\end{equation}
+对应的 \path{src/precomputed_ecmult_gen.c} 在提交差异中大幅缩短。该 PR
+用 42 KiB 的主表减少量和少量额外符号处理换取更少的在线点加入，这也是
+签名与公钥生成共同加速的主要原因。
+
+\section{性能结果与讨论}
+
+\begin{table}[H]
+\centering
+\caption{30 次/版本微基准与 15 区组比较结果}
+\footnotesize
+\begin{tabularx}{\textwidth}{p{0.12\textwidth}p{0.24\textwidth}
+p{0.23\textwidth}X}
+\toprule
+PR & 操作 & 区组中位变化 & bootstrap 95\% 区间\\
+\midrule
+\#1446 & ECDSA verify & $-6.31\%$ & $[-7.60\%,-2.55\%]$\\
+\#1058 & ECDSA sign   & $-11.78\%$ & $[-12.36\%,-11.09\%]$\\
+\#1058 & EC keygen    & $-13.85\%$ & $[-15.05\%,-12.50\%]$\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\reportfigure{imgs/12_block_changes_paper.png}{1.00}
+{15 个实验区组的合入后相对变化}
+{注：负值表示合入后耗时降低；横线表示区组中位数，区间表示 bootstrap 95\% 区间}
+
+PR \#1446 有 3 个区组落在零线以上，表明短时系统状态仍会影响测量；15 个
+区组的中位数及其区间均低于零。PR \#1058 的两个操作变化更集中，幅度也
+更大，与点加入次数由 64 次降为 44 次、主表由 64 KiB 降为 22 KiB 的
+源码变化一致。
+
+在本机 GCC 15.2.0 环境中，PR \#1446 合入后的 C/int128 路径比旧汇编路径
+更快。由于实验未采集硬件性能计数器，数据没有进一步区分指令调度、缓存或
+寄存器分配的贡献。PR \#1058 对签名和公钥生成均产生改善，与固定基点
+\texttt{ecmult\_gen} 的调用位置相符。
+
+\subsection{实验局限}
+
+\begin{itemize}
+  \item 测试固定了逻辑 CPU 0 和进程优先级，但动态频率、Turbo、系统中断
+  与后台任务仍可能引入波动。
+  \item 性能实验只覆盖 GCC 15.2.0、\texttt{-O2} 和一台 x86\_64 机器；
+  不同编译器、优化选项或微架构可能得到不同结果。
+  \item 15 个区组适合描述本次重复性，样本规模仍较小。
+  \item 微基准测量库函数耗时，与钱包签名、脚本验签或区块验证吞吐并非
+  同一层面的指标。
+  \item PR \#1257 以机器码检查为主，未运行 dudect 统计检验\cite{dudect}。
+\end{itemize}
+
+后续可在 Linux 隔离核心并固定频率的环境中复测，同时采集 cycles、
+instructions 和 cache-misses；PR \#1257 还可补充 dudect 两类输入检验。
+
+\section{结论}
+
+本文从编译器、有限域运算和固定基点标量乘法三个层次，分析了
+secp256k1 中一项安全修复和两项性能改进。
+
+PR \#1257 的 Clang 15 汇编显示，修复前秘密条件会影响加载地址，修复后
+改为双侧加载并使用掩码合并，改善了条件移动实现的常数时间编译鲁棒性。
+PR \#1446 将 5$\times$52 域运算的入口由手写 x86\_64 汇编切换为
+C/int128；在本文环境中，ECDSA 验签耗时中位下降 $6.31\%$。
+PR \#1058 通过 signed-digit multi-comb 将主预计算表由 64 KiB 缩小为
+22 KiB，并把默认在线点加入次数由 64 次降为 44 次；签名和公钥生成耗时
+中位分别下降 $11.78\%$ 与 $13.85\%$。
+
+四个性能版本均通过上游默认迭代测试。上述性能数据来自 15 个交错区组，
+适用于本文列出的工具链与机器环境；源码差异、编译输出、测量明细、测试
+日志和复现脚本均收录于附件。
+
+\begin{thebibliography}{99}
+
+\bibitem{secp-repo}
+Bitcoin Core contributors.
+\newblock \emph{secp256k1: Optimized C library for EC operations on curve secp256k1}.
+\newblock \url{https://github.com/bitcoin-core/secp256k1}.
+
+\bibitem{secp-changelog}
+Bitcoin Core contributors.
+\newblock \emph{secp256k1 CHANGELOG.md}.
+\newblock \url{https://github.com/bitcoin-core/secp256k1/blob/master/CHANGELOG.md}.
+
+\bibitem{pr1257}
+Bitcoin Core contributors.
+\newblock PR \#1257: Fix constant-time \texttt{cmov} when compiling with Clang 15.
+\newblock \url{https://github.com/bitcoin-core/secp256k1/pull/1257}.
+
+\bibitem{pr1446}
+Bitcoin Core contributors.
+\newblock PR \#1446: Remove x86\_64 field arithmetic assembly.
+\newblock \url{https://github.com/bitcoin-core/secp256k1/pull/1446}.
+
+\bibitem{pr1058}
+Bitcoin Core contributors.
+\newblock PR \#1058: Implement \texttt{ecmult\_gen} using signed-digit multi-comb.
+\newblock \url{https://github.com/bitcoin-core/secp256k1/pull/1058}.
+
+\bibitem{hamburg}
+Mike Hamburg.
+\newblock Fast and compact elliptic-curve cryptography.
+\newblock Cryptology ePrint Archive, Paper 2012/309, 2012.
+\newblock \url{https://eprint.iacr.org/2012/309}.
+
+\bibitem{sec2}
+Standards for Efficient Cryptography Group.
+\newblock \emph{SEC 2: Recommended Elliptic Curve Domain Parameters}, Version 2.0.
+\newblock \url{https://www.secg.org/sec2-v2.pdf}.
+
+\bibitem{barthe-ct}
+Gilles Barthe, Sandrine Blazy, Benjamin Grégoire, Rémi Hutin,
+Vincent Laporte, David Pichardie, and Alix Trieu.
+\newblock Formal Verification of a Constant-Time Preserving C Compiler.
+\newblock Cryptology ePrint Archive, Paper 2019/926; POPL 2020.
+\newblock \url{https://eprint.iacr.org/2019/926}.
+
+\bibitem{dudect}
+Oscar Reparaz, Josep Balasch, and Ingrid Verbauwhede.
+\newblock Dude, is my code constant time?
+\newblock Cryptology ePrint Archive, Paper 2016/1123, 2016.
+\newblock \url{https://eprint.iacr.org/2016/1123}.
+
+\bibitem{bitcoin-key}
+Bitcoin Core contributors.
+\newblock \emph{Bitcoin Core src/key.cpp}.
+\newblock \url{https://github.com/bitcoin/bitcoin/blob/9611a356035be531d62bfc40879f388d5dc359c4/src/key.cpp}.
+\newblock Accessed 2026-07-30.
+
+\bibitem{bitcoin-pubkey}
+Bitcoin Core contributors.
+\newblock \emph{Bitcoin Core src/pubkey.cpp}.
+\newblock \url{https://github.com/bitcoin/bitcoin/blob/9611a356035be531d62bfc40879f388d5dc359c4/src/pubkey.cpp}.
+\newblock Accessed 2026-07-30.
+
+\bibitem{bitcoin-interpreter}
+Bitcoin Core contributors.
+\newblock \emph{Bitcoin Core src/script/interpreter.cpp}.
+\newblock \url{https://github.com/bitcoin/bitcoin/blob/9611a356035be531d62bfc40879f388d5dc359c4/src/script/interpreter.cpp}.
+\newblock Accessed 2026-07-30.
+
+\bibitem{llvm15}
+LLVM Project.
+\newblock \emph{LLVM 15.0.7 Release}.
+\newblock \url{https://github.com/llvm/llvm-project/releases/tag/llvmorg-15.0.7}.
+
+\bibitem{intel1360p}
+Intel Corporation.
+\newblock \emph{13th Gen Intel Core mobile processor comparison chart}.
+\newblock \url{https://www.intel.com/content/dam/support/us/en/documents/processors/core/Intel-Core-Comparsion.pdf}.
+\newblock Accessed 2026-07-30.
+\end{thebibliography}
+
+\clearpage
+\appendix
+\section{机器码摘录}
+
+下列行号取自附件中的完整 \texttt{.s} 文件。
+
+\begin{lstlisting}[style=ShellStyle,caption={pr1257\_actual\_before\_bool\_win\_O2.s，第 36--50 行},basicstyle=\scriptsize\ttfamily]
+36: test  r8d, r8d
+37: cmove rdx, rcx
+38: mov   rdx, qword ptr [rdx]
+39: mov   qword ptr [rcx], rdx
+40: cmove rax, r9
+41: mov   rax, qword ptr [rax]
+43: cmove r11, r10
+44: mov   rax, qword ptr [r11]
+46: cmove rdi, rsi
+47: mov   rax, qword ptr [rdi]
+49: cmove rbx, r14
+50: mov   rax, qword ptr [rbx]
+\end{lstlisting}
+
+\begin{lstlisting}[style=ShellStyle,caption={pr1257\_actual\_after\_bool\_win\_O2.s，第 23--56 行},basicstyle=\scriptsize\ttfamily]
+23: test   r8d, r8d
+24: setne  al
+25: mov    dword ptr [rsp + 4], eax
+26: movsxd r10, dword ptr [rsp + 4]
+29: mov    r9, qword ptr [rcx]
+30: and    r9, r8
+31: mov    rax, qword ptr [rdx]
+32: and    rax, r10
+33: or     rax, r9
+35: mov    r9, qword ptr [rcx + 8]
+37: mov    rax, qword ptr [rdx + 8]
+41: mov    r9, qword ptr [rcx + 16]
+43: mov    rax, qword ptr [rdx + 16]
+47: mov    r9, qword ptr [rcx + 24]
+49: mov    rax, qword ptr [rdx + 24]
+53: and    r8, qword ptr [rcx + 32]
+54: and    r10, qword ptr [rdx + 32]
+55: or     r10, r8
+56: mov    qword ptr [rcx + 32], r10
+\end{lstlisting}
+
+\section{关键复现命令}
+
+\begin{lstlisting}[style=ShellStyle,caption={汇编、包含轨迹、微基准与默认测试},basicstyle=\scriptsize\ttfamily]
+# Repeat <version>=before and after; full flags are in evidence logs
+clang -O2 -S -masm=intel -I <version> pr1257_probe.c -o <version>.s
+gcc -O2 -std=c90 -DUSE_ASM_X86_64 -I <version> \
+  -I <version>/src -H -E -o NUL <version>/src/secp256k1.c
+python scripts/run_pr_benchmarks_v3.py
+python scripts/run_default_tests_all.py
+\end{lstlisting}
+
+\section{证据文件索引}
+
+\footnotesize
+\begin{longtable}{p{0.43\textwidth}p{0.49\textwidth}}
+\toprule
+文件 & 用途\\
+\midrule
+\endfirsthead
+\toprule
+文件 & 用途\\
+\midrule
+\endhead
+\path{pr1257_actual_before_bool_win_O2.s} &
+Clang 15.0.7 修复前完整汇编。\\
+\path{pr1257_actual_after_bool_win_O2.s} &
+Clang 15.0.7 修复后完整汇编。\\
+\path{pr1446_before_include_trace.txt} &
+合入前完整 GCC 包含轨迹。\\
+\path{pr1446_after_include_trace.txt} &
+合入后完整 GCC 包含轨迹。\\
+\path{pr1446_core_diff.patch} &
+PR \#1446 核心文件的 Git diff。\\
+\path{pr1058_core_diff.patch} &
+PR \#1058 参数、在线函数与预计算程序的 Git diff。\\
+\path{benchmark_detail_30.csv} &
+15 区组、180 行逐次测量明细。\\
+\path{benchmark_comparison_30.csv} &
+区组中位变化与 bootstrap 区间。\\
+\path{benchmark_raw_30.txt} &
+微基准程序逐次输出。\\
+\path{benchmark_environment_30.json} &
+编译器、系统、CPU 亲和性与优先级。\\
+\path{default_tests_all_four_versions.txt} &
+四个版本的完整默认测试命令与结果。\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\end{document}
+
